@@ -16,11 +16,15 @@ noremap n nzz
 noremap N Nzz
 noremap <C-j> 5j
 noremap <C-k> 5k
+noremap <C-l> :tabnext<CR>
+noremap <C-h> :tabprevious<CR>
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 inoremap <C-d> <Delete>
+inoremap <D-z> :undo\n
+noremap <D-z> :undo\n
 
 " 分屏模式
 map s <nop>
@@ -99,6 +103,11 @@ au FileType html,python,vim,javascript setl tabstop=2
 au FileType java,php setl shiftwidth=4
 au FileType java,php setl tabstop=4
 
+"===
+"=== GVIM setting
+"===
+set guifont=*
+
 " 检测文件的类型
 filetype on
 filetype plugin on
@@ -121,12 +130,14 @@ Plug 'kien/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'morhetz/gruvbox'
 Plug 'doums/darcula'
+Plug 'lyokha/vim-xkbswitch'
 
 " Vim-lsp
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'piec/vim-lsp-gopls'
 
 " File navigation
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -183,6 +194,8 @@ let g:mkdp_markdown_css = ''
 let g:mkdp_highlight_css = ''
 let g:mkdp_port = ''
 let g:mkdp_page_title = '「${name}」'
+let g:vimwiki_list = [{'path': '~/Vimwiki/', 'syntax': 'markdown', 'ext': '.md', 'template_path': '', 'custom_wiki2html': '$HOME/.bin/wiki2html.sh' }]
+
 
 " ===
 " === Vim-lsp 配置
@@ -237,3 +250,21 @@ if executable('bash-language-server')
           \ })
   augroup END
 endif
+
+if executable('gopls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'gopls',
+        \ 'cmd': {server_info->['gopls']},
+        \ 'whitelist': ['go'],
+        \ })
+    autocmd BufWritePre *.go LspDocumentFormatSync
+  endif
+
+if executable('go-langserver')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'go-langserver',
+        \ 'cmd': {server_info->['go-langserver', '-gocodecompletion']},
+        \ 'whitelist': ['go'],
+        \ })
+    autocmd BufWritePre *.go LspDocumentFormatSync
+  endif
