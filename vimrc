@@ -4,10 +4,8 @@ exec "nohlsearch"
 " vscode-vim配置：https://github.com/VSCodeVim/Vim 
 
 set nocompatible
-filetype plugin on
 syntax on
-syntax enable
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " 快捷键映射
 let mapleader=" "
@@ -103,11 +101,6 @@ au FileType html,python,vim,javascript setl tabstop=2
 au FileType java,php setl shiftwidth=4
 au FileType java,php setl tabstop=4
 
-"===
-"=== GVIM setting
-"===
-set guifont=*
-
 " 检测文件的类型
 filetype on
 filetype plugin on
@@ -130,21 +123,19 @@ Plug 'kien/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'morhetz/gruvbox'
 Plug 'doums/darcula'
-Plug 'lyokha/vim-xkbswitch'
 
 " Vim-lsp
 Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'piec/vim-lsp-gopls'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" Plug 'piec/vim-lsp-gopls'
 
 " File navigation
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'vimwiki/vimwiki'
 
@@ -251,20 +242,21 @@ if executable('bash-language-server')
   augroup END
 endif
 
-if executable('gopls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'gopls',
-        \ 'cmd': {server_info->['gopls']},
-        \ 'whitelist': ['go'],
-        \ })
-    autocmd BufWritePre *.go LspDocumentFormatSync
-  endif
-
-if executable('go-langserver')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'go-langserver',
-        \ 'cmd': {server_info->['go-langserver', '-gocodecompletion']},
-        \ 'whitelist': ['go'],
-        \ })
-    autocmd BufWritePre *.go LspDocumentFormatSync
-  endif
+" let g:lsp_gopls_ignore_warning = 1
+" if executable('gopls')
+"     au User lsp_setup call lsp#register_server({
+"         \ 'name': 'gopls',
+"         \ 'cmd': {server_info->['gopls']},
+"         \ 'whitelist': ['go'],
+"         \ })
+"     autocmd BufWritePre *.go LspDocumentFormatSync
+"   endif
+" 
+" if executable('go-langserver')
+"     au User lsp_setup call lsp#register_server({
+"         \ 'name': 'go-langserver',
+"         \ 'cmd': {server_info->['go-langserver', '-gocodecompletion']},
+"         \ 'whitelist': ['go'],
+"         \ })
+"     autocmd BufWritePre *.go LspDocumentFormatSync
+"   endif
