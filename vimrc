@@ -1,11 +1,6 @@
-echo ">^.^<"
-
 exec "nohlsearch"
-" vscode-vim配置：https://github.com/VSCodeVim/Vim 
-
-set nocompatible
 syntax on
-" au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " 快捷键映射
 let mapleader=" "
@@ -44,13 +39,13 @@ map <leader>` :-tabnext<CR>
 
 
 " 配置文件
+set number
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 set termguicolors
 set write
-set number
 set ruler
 set history=1000
 set mouse=a
@@ -68,7 +63,7 @@ set backspace=2
 set clipboard=autoselect
 " 文件被改动时自动载入
 set autoread
-set autowriteall
+set autowrite
 " 顶部底部保持3行距离
 set scrolloff=5
 
@@ -106,30 +101,24 @@ filetype on
 filetype plugin on
 filetype indent on
 
-" 自动保存
-set autowrite
-
 "if $TERM_PROGRAM =~ "iTerm"
 let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
 let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
 "endif
 
-
 " ===
 " === 插件 
 " ===
 call plug#begin('~/.vim/plugged')
-Plug 'kien/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
-Plug 'morhetz/gruvbox'
 Plug 'doums/darcula'
 
 " Vim-lsp
 Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/vim-lsp'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
-" Plug 'piec/vim-lsp-gopls'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'piec/vim-lsp-gopls'
 
 " File navigation
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -242,21 +231,21 @@ if executable('bash-language-server')
   augroup END
 endif
 
-" let g:lsp_gopls_ignore_warning = 1
-" if executable('gopls')
-"     au User lsp_setup call lsp#register_server({
-"         \ 'name': 'gopls',
-"         \ 'cmd': {server_info->['gopls']},
-"         \ 'whitelist': ['go'],
-"         \ })
-"     autocmd BufWritePre *.go LspDocumentFormatSync
-"   endif
-" 
-" if executable('go-langserver')
-"     au User lsp_setup call lsp#register_server({
-"         \ 'name': 'go-langserver',
-"         \ 'cmd': {server_info->['go-langserver', '-gocodecompletion']},
-"         \ 'whitelist': ['go'],
-"         \ })
-"     autocmd BufWritePre *.go LspDocumentFormatSync
-"   endif
+let g:lsp_gopls_ignore_warning = 1
+if executable('gopls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'gopls',
+        \ 'cmd': {server_info->['gopls']},
+        \ 'whitelist': ['go'],
+        \ })
+    autocmd BufWritePre *.go LspDocumentFormatSync
+  endif
+
+if executable('go-langserver')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'go-langserver',
+        \ 'cmd': {server_info->['go-langserver', '-gocodecompletion']},
+        \ 'whitelist': ['go'],
+        \ })
+    autocmd BufWritePre *.go LspDocumentFormatSync
+  endif
