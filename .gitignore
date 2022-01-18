@@ -1,5 +1,7 @@
 .DS_Store
 */.DS_Store
 .netrwhist
-sessions 
+sessions
 viminfo
+plugged/*
+autoload/*
