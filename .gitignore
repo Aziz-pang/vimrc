@@ -3,5 +3,5 @@
 .netrwhist
 sessions
 viminfo
-plugged/*
-autoload/*
+plugged
+autoload
